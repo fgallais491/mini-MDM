@@ -1,1 +1,1 @@
-# -mini-MDM
+# mini-MDM
