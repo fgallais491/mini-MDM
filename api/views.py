@@ -18,10 +18,10 @@ class FleetViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        return Fleet.objects.filter(owner = self)
+        return Fleet.objects.filter(owner = self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(owner = self.request.owner)
+        serializer.save(owner = self.request.user)
 
 
 class DeviceViewSet(viewsets.ModelViewSet):
@@ -30,4 +30,11 @@ class DeviceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOfFleetDevice]
 
     def get_queryset(self):
-        return Device.objects.filter(fleet_owner = self.request.user)
+        queryset = Device.objects.filter(fleet__owner=self.request.user)
+        fleet_id = self.request.query_params.get('fleet')
+        if fleet_id:
+            queryset = queryset.filter(fleet_id=fleet_id)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save()

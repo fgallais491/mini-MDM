@@ -21,3 +21,15 @@ class DeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Device
         fields = '__all__'
+
+    def validate_fleet(self, fleet):
+        user = self.context['request'].user
+        if fleet.owner != user:
+            raise serializers.ValidationError("You can only assign devices to your own fleets.")
+        return fleet
+
+    def validate(self, data):
+        user = self.context['request'].user
+        if not user.fleets.exists():
+            raise serializers.ValidationError("You must own at least one fleet to create a device.")
+        return data
