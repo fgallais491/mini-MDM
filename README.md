@@ -59,4 +59,3 @@ Authentication is required for all API endpoints (Basic Auth).
 * Devices can only be moved between Fleets owned by the same user
 * Devices must be created in a Fleet owned by the user
 * Device list supports filtering by Fleet
-$$
