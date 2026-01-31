@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.http import HttpResponse 
 
 def home(request):
-    return HttpResponse("The API is running add api/ or admin/ in the url to see things")
+    return HttpResponse("The API is running, add api/ or admin/ in the url to see things")
 
 
 urlpatterns = [
